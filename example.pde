@@ -1,7 +1,5 @@
 ValueViewer viewer = new ValueViewer(this);
 
-int u = 0;
-
 void setup() {
   size(600, 400);
 }
@@ -10,7 +8,6 @@ boolean hoge = true;
 String fuga = "hello";
 int aa = 100;
 float bb = 12.8;
-boolean hige = false;
 
 void draw() {
   int a = 0;
