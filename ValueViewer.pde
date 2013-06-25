@@ -176,7 +176,7 @@ class ValueViewer extends JFrame{
       
       g.setColor(new Color(0, 0, 0));
       g.drawLine(0, (row + 1) * rowHeight, screenSize.width, (row + 1) * rowHeight);
-      g.drawString(name+" ("+type+")", margin, (row + 1) * rowHeight - margin);
+      g.drawString(name, margin, (row + 1) * rowHeight - margin);
       g.drawString(value, screenSize.width / 2 + margin, (row + 1) * rowHeight - margin);
       row++;
     }
