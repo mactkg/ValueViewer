@@ -1,17 +1,17 @@
 ValueViewer viewer = new ValueViewer(this);
 
-boolean hoge = true;
-String fuga = "hello";
-int aa = 100;
-float bb = 12.8;
-double cc = 1.0;
-long dd = 50000000;
-float[] i = new float[2];
-int[][] j = new int[3][3];
+boolean fill = true;
+String str = "hello";
+int x = 100;
+float y = 12.8;
+double hoge = 1.0;
+long fuga = 50000000;
+float[] foo = new float[2];
+int[][] bar = new int[3][3];
 
 void setup() {
   size(600, 400);
-  viewer.removeValue("i");
+  viewer.removeValue("foo");
 }
 
 void draw() {
@@ -20,11 +20,22 @@ void draw() {
   viewer.addValue("mouseX", mouseX);
   viewer.addValue("mouseY", mouseY);
   
-  viewer.addValue("aa%600", aa%600);
+  viewer.addValue("x%height", x%height);
+    
+  if(fill)
+    fill(255);
+  else
+    noFill();
+  ellipse(x%width, height/2+20.0*sin(y), 50, 50);
   
-  aa++;
-  ellipse(aa%600, 200+20.0*sin(bb), 50, 50);
-  
-  bb -= 0.05;
-  j[1][1] = (int)(20.0*sin(bb));
+  y -= 0.05;
+  x++;
+  bar[1][1] = (int)(20.0*sin(y));
+}
+
+void mouseClicked() {
+  if(fill == true)
+    fill = false;
+  else
+    fill = true;
 }
