@@ -20,7 +20,7 @@ class ValueViewer extends JFrame{
   private final String[] numericType = {"int", "java.lang.Integer", "float", "java.lang.Float", "double", "java.lang.Double", "long", "java.lang.Long"};
   private HashMap<String, Object> userValues = new HashMap<String, Object>();
   private HashMap<String, Object> prevDict = new HashMap<String, Object>();
-  private StringList rmList = new StringList();
+  private ArrayList rmList = new ArrayList();
   private int row;
   private boolean onPause = false;
   private Object pObject;
@@ -101,8 +101,8 @@ class ValueViewer extends JFrame{
   }
   
   void removeValue(String name){
-    if (!rmList.hasValue(name)){
-      rmList.append(name);
+    if (!rmList.contains(name)){
+      rmList.add(name);
     }
   }
 
@@ -118,7 +118,7 @@ class ValueViewer extends JFrame{
       row = min(-scrollbar.getValue(), 0);
       Field[] fields = pObject.getClass().getDeclaredFields();
       for (Field f : fields) {
-        if (rmList.hasValue(f.getName()))
+        if (rmList.contains(f.getName()))
           continue;
         
         try {
@@ -185,9 +185,9 @@ class ValueViewer extends JFrame{
     private int keyNum = 0;
     private HashMap<String, Integer> arrayCount = new HashMap<String, Integer>();
     private HashMap<String, Integer> arrayDim = new HashMap<String, Integer>();
-    private HashMap<String, IntList> depthCount = new HashMap<String, IntList>();
-    private HashMap<String, IntList> arrayIndex = new HashMap<String, IntList>();
-    private StringList initilizedKey = new StringList();
+    private HashMap<String, ArrayList<Integer>> depthCount = new HashMap<String, ArrayList<Integer>>();
+    private HashMap<String, ArrayList<Integer>> arrayIndex = new HashMap<String, ArrayList<Integer>>();
+    private ArrayList<String> initilizedKey = new ArrayList<String>();
     
     private int countArrayDimention(Object object, int depth){
       if (Array.get(object, 0).getClass().isArray()) {
@@ -231,12 +231,15 @@ class ValueViewer extends JFrame{
         g.setColor(Color.getHSBColor(1.0 / arrayDim.get(keyName) * depth, 1.0, 1.0));
         
         for(int i = 0; i < arrayCount.get(keyName)/size; i++){
+          //int 
           int k1 = min(depthCount.get(keyName).get(i*size), depth);
-          int k2 = min(depthCount.get(keyName).get((i+1)*size), depth);
+          int k2 = min(depthCount.get(keyName).get(i*size), depth);
           g.drawRect(screenSize.width / 2 + 1 + depth, (row + i * size) * rowHeight + k1, ceil((float)screenSize.width / 2) - (1 + depth) * 2, rowHeight * size - k1 - k2);
           
-          if (!initilizedKey.hasValue(keyName)){
-            depthCount.get(keyName).increment(i * size);
+          if (!initilizedKey.contains(keyName)){
+            Integer tmp = Integer.valueOf(depthCount.get(keyName).get(i*size) + 1);
+            //println(tmp);
+            depthCount.get(keyName).set(i*size, tmp);
           }
           
         }
@@ -256,7 +259,7 @@ class ValueViewer extends JFrame{
       } else {
         int len = Array.getLength(object);
         for(int i = 0; i < len; i++){
-          arrayIndex.get(keyName).set(depth, i);
+          //arrayIndex.get(keyName).set(depth, i);
           
           int x = (int)((float)screenSize.width / 2 + (((float)screenSize.width / 2) / len) * i);
           int w = ceil(((float)screenSize.width / 2) / len);
@@ -268,6 +271,7 @@ class ValueViewer extends JFrame{
           for(int j : arrayIndex.get(keyName)){
             idx = idx + "[" + j + "]";
           }
+          idx = idx + "[" + i + "]";
           g.drawString(idx + " " + Array.get(object, i).toString(), x + margin, (row + 1) * rowHeight - margin);
           
           prevDict.put(keyName + keyNum, Array.get(object, i).toString());
@@ -286,18 +290,18 @@ class ValueViewer extends JFrame{
         if (!arrayDim.containsKey(keyName))
           arrayDim.put(keyName, max(1, countArrayDimention(f.get(pObject), 0) - 1));
         if (!depthCount.containsKey(keyName)){
-          depthCount.put(keyName, new IntList());
+          depthCount.put(keyName, new ArrayList<Integer>());
           for(int i = 0; i < arrayCount.get(keyName); i++){
-            depthCount.get(keyName).append(0);
+            depthCount.get(keyName).add(0);
           }
         }
         if (!arrayIndex.containsKey(keyName)){
-          arrayIndex.put(keyName, new IntList());
+          arrayIndex.put(keyName, new ArrayList<Integer>());
           for(int i = 0; i < arrayDim.get(keyName); i++){
-            depthCount.get(keyName).append(0);
+            arrayIndex.get(keyName).add(0);
           }
         }
-        
+        println(arrayIndex.get(keyName).size());
         g.drawString(keyName, margin, (row + 1) * rowHeight - margin);
         int tmp = row;
         drawFrameLow(g, f.get(pObject), 0);
@@ -307,9 +311,13 @@ class ValueViewer extends JFrame{
         enumArray(g, f.get(pObject), 0);
         g.drawLine(0, row * rowHeight, screenSize.width, row * rowHeight);
         
-        if (!initilizedKey.hasValue(keyName))
-          initilizedKey.append(keyName);
-      } catch(Exception e) {}
+        if (!initilizedKey.contains(keyName)){
+          initilizedKey.add(keyName);
+        }
+        
+      } catch(Exception e) {
+        println(e);
+      }
     }
   }
 }
