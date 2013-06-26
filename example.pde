@@ -1,4 +1,4 @@
-ValueViewer viewer = new ValueViewer(this);
+ValueViewer viewer;
 
 boolean fill = true;
 String str = "hello";
@@ -11,6 +11,7 @@ int[][] bar = new int[3][3];
 
 void setup() {
   size(600, 400);
+  viewer = new ValueViewer(this);
   viewer.removeValue("foo");
 }
 

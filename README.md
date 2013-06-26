@@ -15,8 +15,10 @@ Processing2.0で使えます。
 ## 使用方法
 * (1) ValueViewer.pdeのコードを自分のコードの下に貼るか, NewTab(実行ボタンとかがあるメニューの▼をクリック)して, 適当に名前をつけて, そこに貼る。
 * (2) 自分のコードの一番上に,  
-ValueViewer viewer = new ValueViewer(this);  
- と書く。
+ValueViewer viewer;    
+setup()内に  
+viewer = new ValueViewer(this);  
+と書く
 * (3) viewer.addValue("名前", 値);  
 でローカル変数とかも監視可。draw内で呼ぶべき。
 * (4) viewer.removeValue("名前");  

@@ -23,6 +23,7 @@ class ValueViewer extends JFrame{
   private ArrayList rmList = new ArrayList();
   private int row;
   private boolean onPause = false;
+  private boolean isShowIndex = false;
   private Object pObject;
   private Size screenSize;
   private ViewPanel panel;
@@ -87,7 +88,7 @@ class ValueViewer extends JFrame{
             repaint();
           }
           try {
-            Thread.sleep(50);
+            Thread.sleep(10);
           } catch (Exception e) {}
         }
       }
@@ -104,6 +105,10 @@ class ValueViewer extends JFrame{
     if (!rmList.contains(name)){
       rmList.add(name);
     }
+  }
+  
+  void changeArrayMode(boolean b){
+    isShowIndex = b;
   }
 
   void paint(Graphics g) {
@@ -266,10 +271,12 @@ class ValueViewer extends JFrame{
           g.drawLine(x, row * rowHeight, x, (row + 1) * rowHeight);
           
           String idx = "";
-          for(int j : arrayIndex.get(keyName)){
-            idx = idx + "[" + j + "]";
+          if (isShowIndex){
+            for(int j : arrayIndex.get(keyName)){
+              idx = idx + "[" + j + "]";
+            }
+            idx = idx + "[" + i + "]";
           }
-          idx = idx + "[" + i + "]";
           g.drawString(idx + " " + Array.get(object, i).toString(), x + margin, (row + 1) * rowHeight - margin);
           
           prevDict.put(keyName + keyNum, Array.get(object, i).toString());
