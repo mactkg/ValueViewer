@@ -14,19 +14,19 @@ class Size {
 }
 
 class ValueViewer extends JFrame{
-  static final int margin = 8;
-  static final int rowHeight = 30;
-  final String[] showType = {"int", "java.lang.Integer", "long", "java.lang.Long", "float", "java.lang.Float", "double", "java.lang.Double", "boolean", "java.lang.Boolean", "class java.lang.String", "java.lang.String"};
-  final String[] numericType = {"int", "java.lang.Integer", "float", "java.lang.Float", "double", "java.lang.Double", "long", "java.lang.Long"};
-  HashMap<String, Object> userValues = new HashMap<String, Object>();
-  HashMap<String, Object> prevDict = new HashMap<String, Object>();
-  StringList rmList = new StringList();
-  int row;
-  boolean onPause = false;
-  Object pObject;
-  Size screenSize;
-  ViewPanel panel;
-  JScrollBar scrollbar;
+  private static final int margin = 8;
+  private static final int rowHeight = 30;
+  private final String[] showType = {"int", "java.lang.Integer", "long", "java.lang.Long", "float", "java.lang.Float", "double", "java.lang.Double", "boolean", "java.lang.Boolean", "class java.lang.String", "java.lang.String"};
+  private final String[] numericType = {"int", "java.lang.Integer", "float", "java.lang.Float", "double", "java.lang.Double", "long", "java.lang.Long"};
+  private HashMap<String, Object> userValues = new HashMap<String, Object>();
+  private HashMap<String, Object> prevDict = new HashMap<String, Object>();
+  private StringList rmList = new StringList();
+  private int row;
+  private boolean onPause = false;
+  private Object pObject;
+  private Size screenSize;
+  private ViewPanel panel;
+  private JScrollBar scrollbar;
 
   ValueViewer(Object _pObject) {
     pObject = _pObject;
@@ -313,4 +313,3 @@ class ValueViewer extends JFrame{
     }
   }
 }
-
