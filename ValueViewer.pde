@@ -238,7 +238,6 @@ class ValueViewer extends JFrame{
           
           if (!initilizedKey.contains(keyName)){
             Integer tmp = Integer.valueOf(depthCount.get(keyName).get(i*size) + 1);
-            //println(tmp);
             depthCount.get(keyName).set(i*size, tmp);
           }
           
@@ -259,7 +258,6 @@ class ValueViewer extends JFrame{
       } else {
         int len = Array.getLength(object);
         for(int i = 0; i < len; i++){
-          //arrayIndex.get(keyName).set(depth, i);
           
           int x = (int)((float)screenSize.width / 2 + (((float)screenSize.width / 2) / len) * i);
           int w = ceil(((float)screenSize.width / 2) / len);
@@ -301,7 +299,6 @@ class ValueViewer extends JFrame{
             arrayIndex.get(keyName).add(0);
           }
         }
-        println(arrayIndex.get(keyName).size());
         g.drawString(keyName, margin, (row + 1) * rowHeight - margin);
         int tmp = row;
         drawFrameLow(g, f.get(pObject), 0);
